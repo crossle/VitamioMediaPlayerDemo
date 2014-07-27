@@ -6,9 +6,10 @@ VitamioMediaPlayerDemo is an standalone Android library designed to facilitate t
 How to use?
 ==========
 
-1. Import Android library [VitamioBundle](https://github.com/yixia/VitamioBundle)
-2. Import Android library [ZI](https://github.com/yixia/ZI)
-3. Copy Activity description and permissions to your own project
+1. Import Android library [VitamioBundle](https://github.com/yixia/VitamioBundle).
+2. Import Android library [ZI](https://github.com/yixia/ZI).
+3. Copy Activity description and permissions to your own project.
+4. Invoke Vitamio to playback video.
 
 ```
     Uri uri = Uri.parse("xxxx");
