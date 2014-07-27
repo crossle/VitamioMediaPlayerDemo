@@ -22,7 +22,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/vitamio_name" >
         <activity
-            android:name="io.vov.vitamio.player.activity.InitActivity"
+            android:name="io.vov.vitamio.player.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
@@ -39,6 +39,11 @@
         <service
             android:name="io.vov.vitamio.player.activity.PlayerService"
             android:process=":vitamio" />
+        <!-- Must change android:authorities value -->
+        <provider
+            android:name="com.yixia.zi.provider.SessionProvider"
+            android:authorities="com.yixia.zi.provider.session"
+            android:exported="false" />
     </application>
 
 </manifest>
