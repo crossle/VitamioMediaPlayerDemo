@@ -3,6 +3,8 @@ VitamioMediaPlayerDemo
 
 VitamioMediaPlayerDemo is an standalone Android library designed to facilitate the use of the multimedia. Please reference this as Android library when you used.
 
+![Screenshot](https://raw.githubusercontent.com/yixia/VitamioMediaPlayerDemo/master/vitamio_screenshot.png)
+
 How to use?
 ==========
 
