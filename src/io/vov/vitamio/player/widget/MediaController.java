@@ -134,8 +134,11 @@ public class MediaController extends FrameLayout {
 		if (UIUtils.hasICS()) {
 			try {
 				mAnchor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-				Method setWindowLayoutType = PopupWindow.class.getMethod("setWindowLayoutType", new Class[] { int.class });
-				setWindowLayoutType.invoke(mWindow, WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+				Method setWindowLayoutType = PopupWindow.class.getMethod(
+						"setWindowLayoutType", new Class[] { int.class });
+				setWindowLayoutType
+						.invoke(mWindow,
+								WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
 			} catch (Exception e) {
 				Log.e("setWindowLayoutType", e);
 			}
@@ -150,10 +153,14 @@ public class MediaController extends FrameLayout {
 		mGestures = new CommonGestures(mContext);
 		mGestures.setTouchListener(mTouchListener, true);
 
-		mAnimSlideOutBottom = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_bottom);
-		mAnimSlideOutTop = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_top);
-		mAnimSlideInBottom = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_bottom);
-		mAnimSlideInTop = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_top);
+		mAnimSlideOutBottom = AnimationUtils.loadAnimation(mContext,
+				R.anim.slide_out_bottom);
+		mAnimSlideOutTop = AnimationUtils.loadAnimation(mContext,
+				R.anim.slide_out_top);
+		mAnimSlideInBottom = AnimationUtils.loadAnimation(mContext,
+				R.anim.slide_in_bottom);
+		mAnimSlideInTop = AnimationUtils.loadAnimation(mContext,
+				R.anim.slide_in_top);
 		mAnimSlideOutBottom.setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimationStart(Animation animation) {
@@ -164,7 +171,8 @@ public class MediaController extends FrameLayout {
 				mMediaController.setVisibility(View.GONE);
 				showButtons(false);
 				mHandler.removeMessages(MSG_HIDE_SYSTEM_UI);
-				mHandler.sendEmptyMessageDelayed(MSG_HIDE_SYSTEM_UI, DEFAULT_TIME_OUT);
+				mHandler.sendEmptyMessageDelayed(MSG_HIDE_SYSTEM_UI,
+						DEFAULT_TIME_OUT);
 			}
 
 			@Override
@@ -185,7 +193,8 @@ public class MediaController extends FrameLayout {
 			mRoot.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 				public void onSystemUiVisibilityChange(int visibility) {
 					if ((visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0) {
-						mHandler.sendEmptyMessageDelayed(MSG_HIDE_SYSTEM_UI, DEFAULT_TIME_OUT);
+						mHandler.sendEmptyMessageDelayed(MSG_HIDE_SYSTEM_UI,
+								DEFAULT_TIME_OUT);
 					}
 				}
 			});
@@ -193,7 +202,9 @@ public class MediaController extends FrameLayout {
 	}
 
 	private View inflateLayout() {
-		return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.mediacontroller, this);
+		return ((LayoutInflater) mContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.mediacontroller, this);
 	}
 
 	private void findViewItems(View v) {
@@ -202,11 +213,13 @@ public class MediaController extends FrameLayout {
 		mSystemInfoLayout = v.findViewById(R.id.info_panel);
 
 		mEndTime = (TextView) v.findViewById(R.id.mediacontroller_time_total);
-		mCurrentTime = (TextView) v.findViewById(R.id.mediacontroller_time_current);
+		mCurrentTime = (TextView) v
+				.findViewById(R.id.mediacontroller_time_current);
 
 		mMenu = v.findViewById(R.id.video_menu);
 		mMenu.setOnClickListener(mMenuListener);
-		FractionalTouchDelegate.setupDelegate(mSystemInfoLayout, mMenu, new RectF(1.0f, 1f, 1.2f, 1.2f));
+		FractionalTouchDelegate.setupDelegate(mSystemInfoLayout, mMenu,
+				new RectF(1.0f, 1f, 1.2f, 1.2f));
 
 		mFileName = (TextView) v.findViewById(R.id.mediacontroller_file_name);
 		mDateTime = (TextView) v.findViewById(R.id.date_time);
@@ -214,7 +227,8 @@ public class MediaController extends FrameLayout {
 		mBatteryLevel = (TextView) v.findViewById(R.id.battery_level);
 
 		mControlsLayout = v.findViewById(R.id.mediacontroller_controls);
-		mControlsButtons = v.findViewById(R.id.mediacontroller_controls_buttons);
+		mControlsButtons = v
+				.findViewById(R.id.mediacontroller_controls_buttons);
 
 		mOperationInfo = (TextView) v.findViewById(R.id.operation_info);
 		mOperationVolLum = v.findViewById(R.id.operation_volume_brightness);
@@ -223,15 +237,18 @@ public class MediaController extends FrameLayout {
 
 		mLock = (ImageButton) v.findViewById(R.id.mediacontroller_lock);
 		mLock.setOnClickListener(mLockClickListener);
-		FractionalTouchDelegate.setupDelegate(mSystemInfoLayout, mLock, new RectF(1.0f, 1f, 1.2f, 1.2f));
+		FractionalTouchDelegate.setupDelegate(mSystemInfoLayout, mLock,
+				new RectF(1.0f, 1f, 1.2f, 1.2f));
 
-		mScreenToggle = (ImageButton) v.findViewById(R.id.mediacontroller_screen_size);
+		mScreenToggle = (ImageButton) v
+				.findViewById(R.id.mediacontroller_screen_size);
 		mScreenToggle.setOnClickListener(mScreenToggleListener);
 
 		mSnapshot = (ImageButton) v.findViewById(R.id.mediacontroller_snapshot);
 		mSnapshot.setOnClickListener(mSnapshotListener);
 
-		mPauseButton = (ImageButton) v.findViewById(R.id.mediacontroller_play_pause);
+		mPauseButton = (ImageButton) v
+				.findViewById(R.id.mediacontroller_play_pause);
 		mPauseButton.setOnClickListener(mPauseListener);
 
 		mProgress = (SeekBar) v.findViewById(R.id.mediacontroller_seekbar);
@@ -243,9 +260,11 @@ public class MediaController extends FrameLayout {
 		mAnchor = view;
 		int[] location = new int[2];
 		mAnchor.getLocationOnScreen(location);
-		Rect anchorRect = new Rect(location[0], location[1], location[0] + mAnchor.getWidth(), location[1] + mAnchor.getHeight());
+		Rect anchorRect = new Rect(location[0], location[1], location[0]
+				+ mAnchor.getWidth(), location[1] + mAnchor.getHeight());
 		setWindowLayoutType();
-		mWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, anchorRect.left, anchorRect.bottom);
+		mWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, anchorRect.left,
+				anchorRect.bottom);
 	}
 
 	public void release() {
@@ -312,7 +331,8 @@ public class MediaController extends FrameLayout {
 	public void show(int timeout) {
 		if (timeout != 0) {
 			mHandler.removeMessages(MSG_FADE_OUT);
-			mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_FADE_OUT), timeout);
+			mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_FADE_OUT),
+					timeout);
 		}
 		if (!mShowing) {
 			showButtons(true);
@@ -363,19 +383,23 @@ public class MediaController extends FrameLayout {
 		switch (mVideoMode) {
 		case VideoView.VIDEO_LAYOUT_ORIGIN:
 			setOperationInfo(mContext.getString(R.string.video_original), 500);
-			mScreenToggle.setImageResource(R.drawable.mediacontroller_sreen_size_100);
+			mScreenToggle
+					.setImageResource(R.drawable.mediacontroller_sreen_size_100);
 			break;
 		case VideoView.VIDEO_LAYOUT_SCALE:
 			setOperationInfo(mContext.getString(R.string.video_fit_screen), 500);
-			mScreenToggle.setImageResource(R.drawable.mediacontroller_screen_fit);
+			mScreenToggle
+					.setImageResource(R.drawable.mediacontroller_screen_fit);
 			break;
 		case VideoView.VIDEO_LAYOUT_STRETCH:
 			setOperationInfo(mContext.getString(R.string.video_stretch), 500);
-			mScreenToggle.setImageResource(R.drawable.mediacontroller_screen_size);
+			mScreenToggle
+					.setImageResource(R.drawable.mediacontroller_screen_size);
 			break;
 		case VideoView.VIDEO_LAYOUT_ZOOM:
 			setOperationInfo(mContext.getString(R.string.video_crop), 500);
-			mScreenToggle.setImageResource(R.drawable.mediacontroller_sreen_size_crop);
+			mScreenToggle
+					.setImageResource(R.drawable.mediacontroller_sreen_size_crop);
 			break;
 		}
 
@@ -389,7 +413,8 @@ public class MediaController extends FrameLayout {
 			mControlsButtons.setVisibility(View.GONE);
 			mProgress.setEnabled(false);
 			if (mScreenLocked != toLock)
-				setOperationInfo(mContext.getString(R.string.video_screen_locked), 1000);
+				setOperationInfo(
+						mContext.getString(R.string.video_screen_locked), 1000);
 		} else {
 			mLock.setImageResource(R.drawable.mediacontroller_unlock);
 			// If you wanna to show, set mMenu visible
@@ -397,7 +422,9 @@ public class MediaController extends FrameLayout {
 			mControlsButtons.setVisibility(View.VISIBLE);
 			mProgress.setEnabled(true);
 			if (mScreenLocked != toLock)
-				setOperationInfo(mContext.getString(R.string.video_screen_unlocked), 1000);
+				setOperationInfo(
+						mContext.getString(R.string.video_screen_unlocked),
+						1000);
 		}
 		mScreenLocked = toLock;
 		mGestures.setTouchListener(mTouchListener, !mScreenLocked);
@@ -540,7 +567,8 @@ public class MediaController extends FrameLayout {
 			switch (state) {
 			case CommonGestures.SCALE_STATE_BEGIN:
 				mVideoMode = VideoView.VIDEO_LAYOUT_SCALE_ZOOM;
-				mScreenToggle.setImageResource(R.drawable.mediacontroller_sreen_size_100);
+				mScreenToggle
+						.setImageResource(R.drawable.mediacontroller_sreen_size_100);
 				mPlayer.toggleVideoMode(mVideoMode);
 				break;
 			case CommonGestures.SCALE_STATE_SCALEING:
@@ -581,41 +609,46 @@ public class MediaController extends FrameLayout {
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		int keyCode = event.getKeyCode();
+		int keyMode = event.getAction();
 
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_VOLUME_MUTE:
-			return super.dispatchKeyEvent(event);
-		case KeyEvent.KEYCODE_VOLUME_UP:
-		case KeyEvent.KEYCODE_VOLUME_DOWN:
-			mVolume = mAM.getStreamVolume(AudioManager.STREAM_MUSIC);
-			int step = keyCode == KeyEvent.KEYCODE_VOLUME_UP ? 1 : -1;
-			setVolume(mVolume + step);
-			mHandler.removeMessages(MSG_HIDE_OPERATION_VOLLUM);
-			mHandler.sendEmptyMessageDelayed(MSG_HIDE_OPERATION_VOLLUM, 500);
-			return true;
-		}
-
-		if (isLocked()) {
-			show();
-			return true;
-		}
-
-		if (event.getRepeatCount() == 0 && (keyCode == KeyEvent.KEYCODE_HEADSETHOOK || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE)) {
-			doPauseResume();
-			show(DEFAULT_TIME_OUT);
-			return true;
-		} else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP) {
-			if (mPlayer.isPlaying()) {
-				mPlayer.pause();
-				updatePausePlay();
+		if (keyMode == KeyEvent.ACTION_DOWN) {
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_VOLUME_MUTE:
+				return super.dispatchKeyEvent(event);
+			case KeyEvent.KEYCODE_VOLUME_UP:
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+				mVolume = mAM.getStreamVolume(AudioManager.STREAM_MUSIC);
+				int step = keyCode == KeyEvent.KEYCODE_VOLUME_UP ? 1 : -1;
+				setVolume(mVolume + step);
+				mHandler.removeMessages(MSG_HIDE_OPERATION_VOLLUM);
+				mHandler.sendEmptyMessageDelayed(MSG_HIDE_OPERATION_VOLLUM, 500);
+				return true;
 			}
-			return true;
-		} else if (keyCode == KeyEvent.KEYCODE_BACK) {
-			release();
-			mPlayer.stop();
-			return true;
-		} else {
-			show(DEFAULT_TIME_OUT);
+
+			if (isLocked()) {
+				show();
+				return true;
+			}
+
+			if (event.getRepeatCount() == 0
+					&& (keyCode == KeyEvent.KEYCODE_HEADSETHOOK
+							|| keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE)) {
+				doPauseResume();
+				show(DEFAULT_TIME_OUT);
+				return true;
+			} else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP) {
+				if (mPlayer.isPlaying()) {
+					mPlayer.pause();
+					updatePausePlay();
+				}
+				return true;
+			} else if (keyCode == KeyEvent.KEYCODE_BACK) {
+				release();
+				mPlayer.stop();
+				return true;
+			} else {
+				show(DEFAULT_TIME_OUT);
+			}
 		}
 		return super.dispatchKeyEvent(event);
 	}
@@ -623,7 +656,8 @@ public class MediaController extends FrameLayout {
 	@TargetApi(11)
 	private void showSystemUi(boolean visible) {
 		if (UIUtils.hasHoneycomb()) {
-			int flag = visible ? 0 : View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LOW_PROFILE;
+			int flag = visible ? 0 : View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_LOW_PROFILE;
 			mRoot.setSystemUiVisibility(flag);
 		}
 	}
@@ -633,7 +667,8 @@ public class MediaController extends FrameLayout {
 		WindowManager.LayoutParams layoutParams = window.getAttributes();
 		float val = showButtons ? -1 : 0;
 		try {
-			Field buttonBrightness = layoutParams.getClass().getField("buttonBrightness");
+			Field buttonBrightness = layoutParams.getClass().getField(
+					"buttonBrightness");
 			buttonBrightness.set(layoutParams, val);
 		} catch (Exception e) {
 			Log.e("dimButtons", e);
@@ -712,7 +747,8 @@ public class MediaController extends FrameLayout {
 		}
 
 		@Override
-		public void onProgressChanged(SeekBar bar, int progress, boolean fromuser) {
+		public void onProgressChanged(SeekBar bar, int progress,
+				boolean fromuser) {
 			if (!fromuser)
 				return;
 
